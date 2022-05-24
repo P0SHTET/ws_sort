@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,6 +74,20 @@ class _MyHomePageState extends State<MyHomePage> {
               onSubmitted: (str) {
                 list[index] = int.tryParse(str) ?? list[index];
               },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                TextInputFormatter.withFunction((oldValue, newValue) {
+                  try {
+                    final text = newValue.text;
+                    if (text.isNotEmpty) int.parse(text);
+                    return newValue;
+                  } catch (e) {
+                    print(e);
+                  }
+                  return oldValue;
+                }),
+              ],
             ),
           );
         },
