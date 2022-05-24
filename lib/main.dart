@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -32,20 +31,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   var list = List.generate(10, (index) => Random().nextInt(100), growable: false);
-
 
   void _randomize() {
     setState(() {
       list = List.generate(10, (index) => Random().nextInt(100), growable: false);
     });
-
-
   }
-  void _sort(){
-    setState((){
-       list.sort();
+
+  void _sort() {
+    setState(() {
+      list.sort();
     });
   }
 
@@ -55,41 +51,41 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         actions: [
           ElevatedButton(
-              onPressed: _sort,
-              child: Icon(Icons.sort),)
+            onPressed: _sort,
+            child: const Icon(Icons.sort),
+          )
         ],
         title: Text(widget.title),
       ),
       body: ListView.builder(
-          reverse: true,
-          shrinkWrap: true,
-          itemCount: list.length,
-          itemBuilder: (context, index){
-            return ListTile(
-                title:
-                     TextField(
-                      controller: TextEditingController(
-                          text: list[index].toString()
-                      ),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-
-                      ),textAlign: TextAlign.center,
-                       onSubmitted: (str){
-                        list[index] = int.tryParse(str)??list[index];
-                       }
-                     ),
-
-            );
-      }),
+        reverse: true,
+        shrinkWrap: true,
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: TextField(
+              controller: TextEditingController(text: list[index].toString()),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+              textAlign: TextAlign.center,
+              onSubmitted: (str) {
+                list[index] = int.tryParse(str) ?? list[index];
+              },
+            ),
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _randomize,
         tooltip: 'Randomize',
-        child: Image.asset('assets/dice.png',
-        height: 40,
-        width: 40,
-        color: Colors.white,),
+        child: Image.asset(
+          'assets/dice.png',
+          height: 40,
+          width: 40,
+          color: Colors.white,
+        ),
       ),
     );
   }
